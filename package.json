@@ -1,0 +1,32 @@
+{
+  "name": "count-outside-pull-requests",
+  "version": "1.0.0",
+  "description": "Count pull requests that are not from your team across repos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/punkave/count-outside-pull-requests.git"
+  },
+  "keywords": [
+    "pull",
+    "requests",
+    "github"
+  ],
+  "author": "P'unk Avenue LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/punkave/count-outside-pull-requests/issues"
+  },
+  "homepage": "https://github.com/punkave/count-outside-pull-requests#readme",
+  "dependencies": {
+    "async": "^2.5.0",
+    "bluebird": "^3.5.1",
+    "boring": "^0.1.0",
+    "qs": "^6.5.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}
