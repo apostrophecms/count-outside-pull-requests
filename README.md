@@ -17,3 +17,7 @@ node app --from=2017-07-01 --to=2017-10-01
 ```
 
 *The `--to` option is "up to but not including," so this is correct.*
+
+## Changelog
+
+1.1.0: `orgs` config option to check all repos in those orgs.

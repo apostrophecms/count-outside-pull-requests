@@ -1,6 +1,6 @@
 {
   "name": "count-outside-pull-requests",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Count pull requests that are not from your team across repos",
   "main": "app.js",
   "scripts": {

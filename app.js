@@ -6,9 +6,12 @@ const qs = require('qs');
 const argv = require('boring')();
 const fs = require('fs');
 const results = {};
+let allRepos = [];
 
-Promise.each(config.repos, processRepo)
-.then(function() {
+Promise.each(config.orgs || [], processOrg).then(function() {
+  allRepos = allRepos.concat(config.repos || []);
+  return Promise.each(allRepos, processRepo)
+}).then(function() {
   let repos = _.keys(results);
   repos.sort(function(a, b) {
     if (results[a] > results[b]) {
@@ -50,6 +53,32 @@ Promise.each(config.repos, processRepo)
   console.error(err);
   process.exit(1);
 });
+
+function processOrg(org) {
+  return processOrgPage(org, 1);
+}
+
+function processOrgPage(org, page) {
+  const params = {
+    access_token: config.token,
+    page: page
+  };
+  let url = 'https://api.github.com/orgs/' + org + '/repos?' + qs.stringify(params);
+  return request(url, { 
+    json: true,
+    headers: {
+      'User-Agent': 'count-outside-pull-requests'
+    },
+  })
+  .then(function(repos) {
+    allRepos = allRepos.concat(_.map(repos, function(repo) {
+      return org + '/' + repo.name;
+    })); 
+    if (repos.length) {
+      return processOrgPage(org, page + 1);
+    }
+  });
+}
 
 function processRepo(repo) {
   return processRepoPage(repo, 1);
