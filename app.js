@@ -6,11 +6,21 @@ const qs = require('qs');
 const argv = require('boring')();
 const fs = require('fs');
 const results = {};
+let team = [];
 let allRepos = [];
 
-Promise.each(config.orgs || [], processOrg).then(function() {
-  allRepos = allRepos.concat(config.repos || []);
-  return Promise.each(allRepos, processRepo)
+Promise.try(function() {
+  if (config.team) {
+    team = config.team;
+    return true;
+  } else {
+    return Promise.each(config.orgs || [], processOrgTeam);
+  }
+}).then(function() {
+  return Promise.each(config.orgs || [], processOrg).then(function() {
+    allRepos = allRepos.concat(config.repos || []);
+    return Promise.each(allRepos, processRepo)
+  });
 }).then(function() {
   let repos = _.keys(results);
   repos.sort(function(a, b) {
@@ -110,7 +120,7 @@ function processRepoPage(repo, page) {
           return;
         }
       }
-      if (!_.includes(config.team, pull.user && pull.user.login)) {
+      if (!_.includes(team, pull.user && pull.user.login)) {
         results[repo] = results[repo] || [];
         results[repo].push(pull);
       }
@@ -121,4 +131,30 @@ function processRepoPage(repo, page) {
     return true;
   });
 }
+
+function processOrgTeam(org) {
+
+  return processOrgTeamPage(org, 1);
+}
+
+function processOrgTeamPage(org, page) {
+  const params = {
+    access_token: config.token,
+    page: page
+  };
+  let url = 'https://api.github.com/orgs/' + org + '/members?' + qs.stringify(params);
+  return request(url, { 
+    json: true,
+    headers: {
+      'User-Agent': 'count-outside-pull-requests'
+    },
+  })
+  .then(function(members) {
+    team = team.concat(_.map(members, 'login'));
+    if (members.length) {
+      return processOrgTeamPage(org, page + 1);
+    }
+  });
+}
+
 
