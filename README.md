@@ -20,4 +20,6 @@ node app --from=2017-07-01 --to=2017-10-01
 
 ## Changelog
 
+1.2.0: automatically excludes org members unless `team` is explicitly configured. To use this option effectively your token must have read access to the members list.
+
 1.1.0: `orgs` config option to check all repos in those orgs.
