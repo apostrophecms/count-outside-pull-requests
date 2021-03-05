@@ -3,7 +3,7 @@
 "How many PRs aren't from our team?"
 
 ```
-git clone https://github.com/punkave/count-outside-pull-requests
+git clone https://github.com/apostrophecms/count-outside-pull-requests
 npm install
 cp config-example.js config.js
 # edit that jawn, then...

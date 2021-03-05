@@ -8,19 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/punkave/count-outside-pull-requests.git"
+    "url": "git+https://github.com/apostrophecms/count-outside-pull-requests.git"
   },
   "keywords": [
     "pull",
     "requests",
     "github"
   ],
-  "author": "P'unk Avenue LLC",
+  "author": "Apostrophe Technologies, Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/punkave/count-outside-pull-requests/issues"
+    "url": "https://github.com/apostrophecms/count-outside-pull-requests/issues"
   },
-  "homepage": "https://github.com/punkave/count-outside-pull-requests#readme",
+  "homepage": "https://github.com/apostrophecms/count-outside-pull-requests#readme",
   "dependencies": {
     "async": "^2.5.0",
     "bluebird": "^3.5.1",
