@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/apostrophecms/count-outside-pull-requests#readme",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^3.2.2",
     "bluebird": "^3.5.1",
     "boring": "^0.1.0",
     "qs": "^6.5.1",
