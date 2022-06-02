@@ -70,15 +70,18 @@ function processOrg(org) {
 
 function processOrgPage(org, page) {
   const params = {
-    access_token: config.token,
-    page: page
+    page
   };
   let url = 'https://api.github.com/orgs/' + org + '/repos?' + qs.stringify(params);
+  const headers = {
+    'User-Agent': 'count-outside-pull-requests'
+  };
+  if (config.token) {
+    headers.Authorization = `token ${config.token}`;
+  }
   return request(url, { 
     json: true,
-    headers: {
-      'User-Agent': 'count-outside-pull-requests'
-    },
+    headers
   })
   .then(function(repos) {
     allRepos = allRepos.concat(_.map(repos, function(repo) {
@@ -97,16 +100,19 @@ function processRepo(repo) {
 function processRepoPage(repo, page) {
   const params = {
     state: 'all',
-    access_token: config.token,
-    page: page
+    page
   }
   let url = 'https://api.github.com/repos/' + repo + '/pulls?' + qs.stringify(params);
   console.log(url);
+  const headers = {
+    'User-Agent': 'count-outside-pull-requests'
+  };
+  if (config.token) {
+    headers.Authorization = `token ${config.token}`;
+  }
   return request(url, { 
     json: true,
-    headers: {
-      'User-Agent': 'count-outside-pull-requests'
-    },
+    headers
   })
   .then(function(pulls) {
     pulls.forEach(function(pull) {
@@ -139,15 +145,18 @@ function processOrgTeam(org) {
 
 function processOrgTeamPage(org, page) {
   const params = {
-    access_token: config.token,
-    page: page
+    page
   };
+  const headers = {
+    'User-Agent': 'count-outside-pull-requests'
+  };
+  if (config.token) {
+    headers.Authorization = `token ${config.token}`;
+  }
   let url = 'https://api.github.com/orgs/' + org + '/members?' + qs.stringify(params);
   return request(url, { 
     json: true,
-    headers: {
-      'User-Agent': 'count-outside-pull-requests'
-    },
+    headers
   })
   .then(function(members) {
     team = team.concat(_.map(members, 'login'));
